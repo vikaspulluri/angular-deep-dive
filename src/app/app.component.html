@@ -1,0 +1,30 @@
+<div class="container">
+	<div class="col-xs-8">
+		<app-cockpit (serverCreated)="onServerAdded($event)" (blueprintCreated)="onBluePrintAdded($event)"></app-cockpit>
+		<hr>
+		<div class="row">
+			<div class="col-xs-12">
+				<app-server-element 
+				*ngFor="let serverElement of serverElements"
+				[element]="serverElement"></app-server-element>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-4">
+		<button class="btn btn-success" (click)="changeData()">Change data</button>
+		<button class="btn btn-danger" (click)="destroyComponent()">Destroy</button>
+		<app-lifecycle-hooks
+		[data]="data"></app-lifecycle-hooks>
+
+		<div *appUnless="oddNumber">
+			<li *ngFor="let number of numbers">
+				{{ number }}
+			</li>
+		</div>
+
+
+		<p appBasicHighlight>Style me with basic highlight</p>
+		<p appBetterHighlight [defaultColor]="'yellow'" [highlightColor]="'red'">Style me with better highlight</p>
+	</div>
+
+</div>
