@@ -10,6 +10,7 @@ export class AppComponent {
   data = "parent data";
 
   oddNumber = false;
+  value = 5;
   numbers = [1,2,3,4,5,6];
   onServerAdded(serverData: {serverName: string, serverContent: string}){
   	this.serverElements.push({
