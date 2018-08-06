@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -6,37 +7,49 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  serverElements = [{type:'server',name:'test-server',content:'Just a test server'}];
-  data = "parent data";
+  @ViewChild('f') signupForm: NgForm;
+  defaultQuestion = 'teacher';
+  answer = '';
+  genders = ['male', 'female'];
+  user = {
+    username: '',
+    email: '',
+    secretQuestion: '',
+    answer: '',
+    gender: ''
+  };
+  submitted = false;
 
-  oddNumber = false;
-  value = 5;
-  numbers = [1,2,3,4,5,6];
-  onServerAdded(serverData: {serverName: string, serverContent: string}){
-  	this.serverElements.push({
-  		type: 'server',
-  		name: serverData.serverName,
-  		content: serverData.serverContent
-  	});
+  suggestUserName() {
+    const suggestedName = 'Superuser';
+    // this.signupForm.setValue({
+    //   userData: {
+    //     username: suggestedName,
+    //     email: ''
+    //   },
+    //   secret: 'pet',
+    //   questionAnswer: '',
+    //   gender: 'male'
+    // });
+    this.signupForm.form.patchValue({
+      userData: {
+        username: suggestedName
+      }
+    });
   }
 
-  onBluePrintAdded(blueprintData: {serverName: string, serverContent: string}){
-  	this.serverElements.push({
-  		type: 'blueprint',
-  		name: blueprintData.serverName,
-  		content: blueprintData.serverContent
-  	})
-  }
+  // onSubmit(form: NgForm) {
+  //   console.log(form);
+  // }
 
-  changeData(){
-    this.data = "parent data changed!!!";
-  }
+  onSubmit() {
+    this.submitted = true;
+    this.user.username = this.signupForm.value.userData.username;
+    this.user.email = this.signupForm.value.userData.email;
+    this.user.secretQuestion = this.signupForm.value.secret;
+    this.user.answer = this.signupForm.value.questionAnswer;
+    this.user.gender = this.signupForm.value.gender;
 
-  destroyComponent(){
-    //Won't applicable to primitive data types.
-    //applicable in case of array and emptying the array
-    //when *ngFor try to repeat the component template, since arr.length=0, component won't render
-    //then ngOnDestroy will triggered
-    this.data = null;
+    this.signupForm.reset();
   }
 }
